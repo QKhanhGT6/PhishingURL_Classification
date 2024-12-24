@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+  
+    <title>Phishing URL Classification</title>
+  
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+  
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+  
+    <!-- font awesome style -->
+    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+  
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="{{ url_for('static', filename='css/responsive.css') }}" rel="stylesheet" />
+  </head>
+  
+
+<body>
+  <div class="hero_area">
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand">
+            <span>
+              Q Khanh
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.html">Github code</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section class="slider_section" style="padding-top: 20px; margin-top: 0;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 col-md-8 mx-auto">
+            <div class="detail-box">
+              <h1>
+                Phishing URL <br>
+                Classification
+              </h1>
+              <p>
+                Logistic Regression built from scratch, no advance library is used
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="find_container">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <form action="{{ url_for('predict') }}" method="post" id="predictionForm">
+                  <div class="form-row">
+                    <!-- URL Input -->
+                    <div class="form-group col-lg-12">
+                      <input type="url" class="form-control" id="urlInput" name="url" placeholder="Paste URL (optional)">
+                      <button type="button" class="btn btn-primary mt-2" onclick="autoExtractFeatures()">Auto Extract Features</button>
+                    </div>
+                    
+                    <!-- Feature Inputs -->
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" step="0.01" name="URLSimilarityIndex" placeholder="URL Similarity Index (float)" required>
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" name="NoOfOtherSpecialCharsInURL" placeholder="No. of Other Special Chars in URL (int)" required>
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" step="0.01" name="SpacialCharRatioInURL" placeholder="Spacial Char Ratio in URL (float)" required>
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" name="IsHTTPS" placeholder="Is HTTPS (0 or 1)" required min="0" max="1">
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" name="LineOfCode" placeholder="Line of Code (int)" required>
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" step="0.01" name="DomainTitleMatchScore" placeholder="Domain Title Match Score (float)" required>
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" step="0.01" name="URLTitleMatchScore" placeholder="URL Title Match Score (float)" required>
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" name="IsResponsive" placeholder="Is Responsive (0 or 1)" required min="0" max="1">
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" name="HasDescription" placeholder="Has Description (0 or 1)" required min="0" max="1">
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" name="HasSocialNet" placeholder="Has Social Net (0 or 1)" required min="0" max="1">
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" name="HasSubmitButton" placeholder="Has Submit Button (0 or 1)" required min="0" max="1">
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" name="HasCopyrightInfo" placeholder="Has Copyright Info (0 or 1)" required min="0" max="1">
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" name="NoOfImage" placeholder="No. of Images (int)" required>
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" name="NoOfJS" placeholder="No. of JS (int)" required>
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <input type="number" class="form-control" name="NoOfSelfRef" placeholder="No. of Self References (int)" required>
+                    </div>
+                    <div class="form-group col-lg-3">
+                      <div class="btn-box">
+                        <button type="submit" class="btn btn-success">Predict</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Bootstrap Modal -->
+  <div
+  class="modal fade"
+  id="resultModal"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+  >
+    <div
+      class="modal-dialog modal-dialog-centered"
+      role="document"
+    >
+      <div class="modal-content {{ 'modal-unsafe' if 'unsafe' in prediction_text else 'modal-safe' }}">
+        <div class="modal-header">
+          <h5 class="modal-title">Prediction Result</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <h4>{{ prediction_text }}</h4>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function autoExtractFeatures() {
+      const url = document.getElementById('urlInput').value;
+      if (!url) {
+        alert("Please paste a URL to auto-extract features!");
+        return;
+      }
+      fetch("/auto_extract", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ url: url }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const form = document.forms['predictionForm'];
+          const inputs = form.elements;
+          const featureFields = Array.from(inputs).filter(
+            (input) => input.name !== "url" && input.type === "number"
+          );
+          featureFields.forEach((input, index) => {
+            input.value = data[index];
+          });
+        })
+        .catch((err) => {
+          console.error("Error extracting features:", err);
+          alert("Failed to auto-extract features!");
+        });
+    }
+  </script>
+
+  <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const predictionText = "{{ prediction_text|safe }}";
+      if (predictionText) {
+        $('#resultModal').modal('show');
+      }
+    });
+  </script>
+  
+</body>
+
