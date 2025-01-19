@@ -8,7 +8,7 @@ Dataset used: https://www.kaggle.com/datasets/prishasawhney/phishing-url-website
 
 ## Features
 1) Custom Logistic Regression Model
-    - Implemented without the use of libraries like scikit-learn for learning purposes.
+    - Implemented gradient descent without the use of libraries like scikit-learn for learning purposes.
     - Includes preprocessing using StandardScaler to normalize feature values.
 
 2) Interactive Web Interface
