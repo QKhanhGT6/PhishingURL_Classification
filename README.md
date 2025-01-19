@@ -1,4 +1,3 @@
-![Screenshot 2024-12-24 101615](https://github.com/user-attachments/assets/5227c656-2fa1-4feb-a117-731f2ecb4b6f)
 # PhishingURL_Classification
 This project is a web-based application designed to classify URLs as safe or unsafe using a logistic regression model built entirely from scratch without the use of any machine learning libraries (except splitting dataset and feature scaling). It serves as an educational demonstration of a binary classification problem while integrating a user-friendly web interface for interaction.
 
